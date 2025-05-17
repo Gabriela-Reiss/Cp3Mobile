@@ -12,6 +12,38 @@ import {
   SafeAreaView
 } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
+import { Picker } from '@react-native-picker/picker';
+
+// Lista de estados brasileiros
+const estadosBrasileiros = [
+  { uf: 'AC', nome: 'Acre' },
+  { uf: 'AL', nome: 'Alagoas' },
+  { uf: 'AP', nome: 'Amapá' },
+  { uf: 'AM', nome: 'Amazonas' },
+  { uf: 'BA', nome: 'Bahia' },
+  { uf: 'CE', nome: 'Ceará' },
+  { uf: 'DF', nome: 'Distrito Federal' },
+  { uf: 'ES', nome: 'Espírito Santo' },
+  { uf: 'GO', nome: 'Goiás' },
+  { uf: 'MA', nome: 'Maranhão' },
+  { uf: 'MT', nome: 'Mato Grosso' },
+  { uf: 'MS', nome: 'Mato Grosso do Sul' },
+  { uf: 'MG', nome: 'Minas Gerais' },
+  { uf: 'PA', nome: 'Pará' },
+  { uf: 'PB', nome: 'Paraíba' },
+  { uf: 'PR', nome: 'Paraná' },
+  { uf: 'PE', nome: 'Pernambuco' },
+  { uf: 'PI', nome: 'Piauí' },
+  { uf: 'RJ', nome: 'Rio de Janeiro' },
+  { uf: 'RN', nome: 'Rio Grande do Norte' },
+  { uf: 'RS', nome: 'Rio Grande do Sul' },
+  { uf: 'RO', nome: 'Rondônia' },
+  { uf: 'RR', nome: 'Roraima' },
+  { uf: 'SC', nome: 'Santa Catarina' },
+  { uf: 'SP', nome: 'São Paulo' },
+  { uf: 'SE', nome: 'Sergipe' },
+  { uf: 'TO', nome: 'Tocantins' }
+];
 
 export default function TelaInicial() {
   const [nomeProduto, setNomeProduto] = useState("");
@@ -19,6 +51,7 @@ export default function TelaInicial() {
   const [prazoValidade, setPrazoValidade] = useState("");
   const [quantidade, setQuantidade] = useState("");
   const [lote, setLote] = useState("");
+  const [estadoOrigem, setEstadoOrigem] = useState("SP"); // Estado padrão SP
   const [listaProdutos, setListaProdutos] = useState([]);
   const [produtoEditado, setProdutoEditado] = useState(null);
 
@@ -44,7 +77,8 @@ export default function TelaInicial() {
       fabricacao: dataFabricacao,
       validade: prazoValidade,
       quantidade: quantidade,
-      lote: lote.toUpperCase()
+      lote: lote.toUpperCase(),
+      estadoOrigem: estadoOrigem
     };
 
     if (produtoEditado) {
@@ -61,6 +95,7 @@ export default function TelaInicial() {
     setPrazoValidade('');
     setQuantidade('');
     setLote('');
+    setEstadoOrigem('SP');
     setProdutoEditado(null);
     
     buscarDados();
@@ -89,6 +124,7 @@ export default function TelaInicial() {
     setPrazoValidade(produto.validade);
     setQuantidade(produto.quantidade);
     setLote(produto.lote);
+    setEstadoOrigem(produto.estadoOrigem || 'SP');
     setProdutoEditado({ index });
   }
 
@@ -155,6 +191,23 @@ export default function TelaInicial() {
             autoCapitalize="characters"
           />
 
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={estadoOrigem}
+              onValueChange={(itemValue) => setEstadoOrigem(itemValue)}
+              style={styles.picker}
+              dropdownIconColor="#333"
+            >
+              {estadosBrasileiros.map((estado) => (
+                <Picker.Item 
+                  key={estado.uf} 
+                  label={`${estado.nome} (${estado.uf})`} 
+                  value={estado.uf} 
+                />
+              ))}
+            </Picker>
+          </View>
+
           <TouchableOpacity 
             style={[styles.btn, produtoEditado ? styles.btnUpdate : styles.btnSave]} 
             onPress={salvar}
@@ -184,6 +237,7 @@ export default function TelaInicial() {
                     <Text style={styles.productDetail}>Validade: {item.validade}</Text>
                     <Text style={styles.productDetail}>Quantidade: {item.quantidade}</Text>
                     <Text style={styles.productDetail}>Lote: {item.lote}</Text>
+                    <Text style={styles.productDetail}>Estado: {item.estadoOrigem || 'Não informado'}</Text>
                   </View>
 
                   <View style={styles.actions}>
@@ -278,6 +332,19 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: '#fff',
     fontSize: 16,
+    color: '#000',
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 15,
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
     color: '#000',
   },
   btn: {
