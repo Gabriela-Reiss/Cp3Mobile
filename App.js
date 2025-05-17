@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import CabecalhoHeader from './src/Components/CabecalhoHeader';
 import TelaInicial from './src/Screens/TelaInicial';
 import TelaEquipe from './src/Screens/TelaEquipe';
+import TelaCodigoB from './src/Screens/TelaCodigoB';
 
 const Drawer = createDrawerNavigator();
 
@@ -36,6 +37,16 @@ function CustomDrawerContent(props) {
           <Ionicons name="people" size={24} color="#000" style={{ marginRight: 10 }} />
         )}
         onPress={() => props.navigation.navigate('TelaEquipe')}
+        labelStyle={styles.drawerLabel}
+        style={styles.drawerItem}
+      />
+
+      <DrawerItem
+        label="Scaner"
+        icon={() => (
+          <Ionicons name="scan-circle-outline" size={24} color="#000" style={{ marginRight: 10 }} />
+        )}
+        onPress={() => props.navigation.navigate('TelaCodigoB')}
         labelStyle={styles.drawerLabel}
         style={styles.drawerItem}
       />
@@ -74,6 +85,12 @@ export default function App() {
           name="TelaEquipe" 
           component={TelaEquipe} 
           options={{ title: 'Equipe'}}
+        />
+
+        <Drawer.Screen 
+          name="TelaCodigoB" 
+          component={TelaCodigoB} 
+          options={{ title: 'Codigo'}}
         />
       </Drawer.Navigator>
     </NavigationContainer>
