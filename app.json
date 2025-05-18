@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "cp3Mobile",
+    "name": "StockMaster",
     "slug": "cp3Mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/caixa.png",
+    "icon": "./assets/iconSplash.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/caixa.png",
+      "image": "./assets/iconSplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -28,7 +28,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "deef1c86-a4d8-450b-82f3-04dfc2f7b14d"
+        "projectId": "b848bb56-3166-43d7-9b19-3e1154cd56b1"
       }
     }
   }
